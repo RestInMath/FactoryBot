@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    <div class="title">Hello, {{ user.username }}!</div>
+
+    <div class="container">
+        <form method="POST" id="sendmsg-form" action="?">
+            {% csrf_token %}
+            <p>Send message to factory bot (tg: @factory_messages_bot)</p>
+            <input type="text" name="sendmsg" placeholder="Type message text here">
+            <button type="submit">Send message</button>
+        </form>
+        <div class="container">
+            {% if errors %}
+                {% for error in errors %}
+                    <p>{{ error  }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container">
+        <p>Your telegram token is:
+            {% if user.is_authenticated %}
+                {{ user.userinfo.token }}
+            {% else %}
+                _____________
+            {% endif %}
+        </p>
+        <form method="POST" action="?">
+            {% csrf_token %}
+            <input type="submit" value="Regenerate token" name="token">
+        </form>
+    </div>
+
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="card has-background-light">
+                    <p> {{ message.text }} </p>
+                    <small style="color: grey"> {{ message.pub_date }} </small>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% else %}
+    <div class="container">
+        <a href="{% url 'login' %}">Log in</a>
+        or
+        <a href="{% url 'signup' %}">sign up</a>
+        to send messages
+    </div>
+{% endif %}
+
+{% endblock %}

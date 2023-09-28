@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        {% if message_text %}
+            <p>Imagine u sent the message with text '{{ message_text }}'</p>
+        {% else %}
+            <p>No message provided</p>
+        {% endif %}
+    </div>
+{% endblock %}

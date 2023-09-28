@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    login
+{% endblock %}
+
+{% block content %}
+<div class="column">
+    <h2 class="title is-5">Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input class="button" type="submit" value="Login">
+    </form>
+    {% if form.errors %}
+        <p style='color:red;'>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    <p><a href="{% url 'signup' %}">Sign up</a></p>
+    <p><a href="{% url 'index' %}">Back to main page</a></p>
+</div>
+{% endblock %}
